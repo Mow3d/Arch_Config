@@ -11,22 +11,36 @@ NC='[0m' # No Color
 
 echo -e "${INFO}Iniciando preparación del sistema...${NC}"
 
-# --- Instalación de Git ---
-echo -e "${INFO}Verificando si Git está instalado...${NC}"
-if ! command -v git &> /dev/null
+# --- Instalación de Paquetes Base (git y base-devel) ---
+echo -e "${INFO}Instalando git y base-devel...${NC}"
+sudo pacman -S --noconfirm --needed git base-devel
+if [ $? -ne 0 ]; then
+    echo -e "${ERROR}No se pudieron instalar los paquetes base. Abortando.${NC}"
+    exit 1
+fi
+echo -e "${SUCCESS}Paquetes base verificados.${NC}"
+
+
+# --- Instalación de Yay (Ayudante de AUR) ---
+echo -e "${INFO}Verificando si Yay está instalado...${NC}"
+if ! command -v yay &> /dev/null
 then
-    echo -e "${WARN}Git no está instalado. Instalando...${NC}"
-    sudo pacman -S --noconfirm git
-    if [ $? -eq 0 ]; then
-        echo -e "${SUCCESS}Git instalado correctamente.${NC}"
+    echo -e "${WARN}Yay no está instalado. Instalando...${NC}"
+    original_dir=$(pwd)
+    cd /tmp
+    git clone https://aur.archlinux.org/yay.git
+    cd yay
+    makepkg -si --noconfirm
+    cd "$original_dir"
+    
+    if command -v yay &> /dev/null; then
+        echo -e "${SUCCESS}Yay instalado correctamente.${NC}"
     else
-        echo -e "${ERROR}No se pudo instalar Git. Abortando.${NC}"
+        echo -e "${ERROR}No se pudo instalar Yay. Revisa los errores de makepkg. Abortando.${NC}"
         exit 1
     fi
 else
-    echo -e "${SUCCESS}Git ya está instalado.${NC}"
+    echo -e "${SUCCESS}Yay ya está instalado.${NC}"
 fi
-
-# Futuras preparaciones (como instalar yay) irán aquí.
 
 echo -e "${SUCCESS}Preparación del sistema completada.${NC}"

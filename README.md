@@ -62,7 +62,8 @@ Este `README.md` sirve como el documento central de planificación. Su propósit
   - **Fuentes:** Se recomienda una `Nerd Font` (ej. `ttf-firacode-nerd`) para los iconos en la terminal.
   - **Cursores:** (A decidir, ej: `bibata-cursor-theme`)
 
-#### B.3. Perfiles de Software (Selección de Aplicaciones)
+#### B.3. Perfiles de Software (Para Menú Post-Instalación)
+*Nota: Estos perfiles no se instalan por defecto. Estarán disponibles como opciones en un menú de gestión una vez que el sistema base esté funcionando.*
 
 ##### Perfil 1: Usuario General (Ofimática y Navegación)
 - **Navegador Web:** `firefox`
@@ -78,9 +79,10 @@ Este `README.md` sirve como el documento central de planificación. Su propósit
 - **Herramientas IA (ejemplos):** `jupyterlab`, `python-pytorch-cuda`
 
 ##### Perfil 3: Creación de Contenido
-- **Edición de Video:** `davinci-resolve` (AUR), `obs-studio` (Grabación y Streaming)
+- **Edición de Video:** `kdenlive`, `obs-studio` (Grabación y Streaming)
 - **Edición de Imagen:** `gimp` (Raster), `inkscape` (Vectorial)
 - **Producción de Audio:** `reaper` (AUR), `audacity`
+- **Post-Instalación Opcional:** `davinci-resolve` (requiere descarga manual, se creará script aparte).
 
 #### B.4. Utilidades del Sistema
 - **Herramientas de Captura de Pantalla:** `grim` y `slurp`
@@ -96,9 +98,10 @@ Este `README.md` sirve como el documento central de planificación. Su propósit
 
 
 ## 3. Plan de Implementación (Scripts)
-1.  **01-system-prep.sh**: Preparar sistema, instalar `git`, `yay` o `paru`.
-2.  **02-packages.sh**: Instalar todos los paquetes de la lista (base y perfiles).
+1.  **01-system-prep.sh**: Preparar sistema, instalar `git` y `yay`.
+2.  **02-packages-base.sh**: Instalar **únicamente** los paquetes del sistema base (Hardware y Software Central).
 3.  **03-configs.sh**: Copiar los dotfiles (configs) al directorio `~/.config`.
 4.  **04-services.sh**: Habilitar servicios del sistema (NetworkManager, Bluetooth, Docker, etc).
-5.  **05-shell-setup.sh**: Instalar y configurar Zsh, Oh My Zsh, y Neovim con sus plugins.
-6.  **06-theming.sh**: Aplicar temas GTK, de iconos y fuentes.  
+5.  **05-shell-setup.sh**: Instalar y configurar Zsh, Oh My Zsh, y Neovim.
+6.  **06-theming.sh**: Aplicar temas GTK, de iconos y fuentes.
+7.  **07-post-install-menu.sh**: **Nuevo.** Script que proveerá un menú (usando wofi) para instalar perfiles de software, actualizar el sistema, etc.  
